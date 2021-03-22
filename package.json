@@ -1,0 +1,16 @@
+{
+  "name": "g6-plugin-lazyload-images",
+  "version": "0.1.0",
+  "repository": "https://github.com/ifvictr/g6-plugin-lazyload-images",
+  "license": "MIT",
+  "author": {
+    "name": "Victor Truong",
+    "email": "victor@victortruong.com",
+    "url": "https://victortruong.com"
+  },
+  "main": "./index.js",
+  "dependencies": {
+    "@antv/g6-core": "^0.2.1",
+    "@antv/g6-plugin": "^0.2.1"
+  }
+}
