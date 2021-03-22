@@ -20,7 +20,7 @@ class LazyLoadImages extends PluginBase {
   }
 
   protected onBeforeLayout() {
-    const placeholder = this.get('placeholder') as string
+    const placeholder: string = this.get('placeholder')
     if (!placeholder) {
       return
     }
