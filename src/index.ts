@@ -54,8 +54,8 @@ class LazyLoadImages extends PluginBase {
   }
 
   protected onViewportChange() {
-    const visibleLazyNodes = this.getVisibleLazyNodes()
-    if (visibleLazyNodes.length === 0) {
+    const loadableNodes = this.getLoadableNodes()
+    if (loadableNodes.length === 0) {
       return
     }
 
@@ -63,7 +63,7 @@ class LazyLoadImages extends PluginBase {
     graph.setAutoPaint(false)
 
     // Replace with actual images
-    visibleLazyNodes.forEach(node => {
+    loadableNodes.forEach(node => {
       const imgSrc = node.getModel().imgLazy as string
       // Remove imgLazy immediately to prevent it from being loaded from multiple
       // times. This occurs when other `viewportchange` events are fired while
@@ -84,7 +84,7 @@ class LazyLoadImages extends PluginBase {
 
   destroy() {}
 
-  private getVisibleLazyNodes() {
+  private getLoadableNodes() {
     // TODO: Get nodes right outside the viewport that are likely to be loaded if
     // the users moves around, then preload them.
     return this.getLazyNodes().filter(node => this.isNodeInViewport(node))
