@@ -85,8 +85,6 @@ class LazyLoadImages extends PluginBase {
   destroy() {}
 
   private getLoadableNodes() {
-    // TODO: Get nodes right outside the viewport that are likely to be loaded if
-    // the users moves around, then preload them.
     return this.getLazyNodes().filter(node => this.isNodeInViewport(node))
   }
 
