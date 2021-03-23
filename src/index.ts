@@ -52,14 +52,18 @@ class LazyLoadImages extends PluginBase {
 
     // Replace with actual images
     visibleLazyNodes.forEach(node => {
-      const model = node.getModel()
+      const imgSrc = node.getModel().imgLazy as string
+      // Remove imgLazy immediately to prevent it from being loaded from multiple
+      // times. This occurs when other `viewportchange` events are fired while
+      // this instance of the image is still being loaded.
+      node.update({ imgLazy: undefined })
+
       const img = new Image()
-      const newModel = { ...model, img, imgLazy: undefined }
-      // Only show the image once it has fully loaded
       img.onload = () => {
-        node.update(newModel)
+        // Only show the image once it has fully loaded
+        node.update({ img })
       }
-      img.src = model.imgLazy as string
+      img.src = imgSrc
     })
 
     graph.paint()
