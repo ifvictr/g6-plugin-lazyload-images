@@ -29,11 +29,13 @@ const graph = new G6.Graph({
 To start lazy loading images, you’ll need to slightly change the model of your nodes where you first add it to the graph:
 
 ```js
+// Before
 graph.addItem('image', {
-  // Before
   img: 'https://example.com/myimage.png'
+})
 
-  // After
+// After
+graph.addItem('image', {
   img: '',
   imgLazy: 'https://example.com/myimage.png'
 })
