@@ -12,5 +12,8 @@
   "dependencies": {
     "@antv/g6-core": "^0.2.1",
     "@antv/g6-plugin": "^0.2.1"
+  },
+  "devDependencies": {
+    "typescript": "^4.2.3"
   }
 }
