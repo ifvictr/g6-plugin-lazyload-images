@@ -8,7 +8,16 @@
     "email": "victor@victortruong.com",
     "url": "https://victortruong.com"
   },
-  "main": "./index.js",
+  "main": "build/index.js",
+  "files": [
+    "build"
+  ],
+  "scripts": {
+    "build": "npm run clean && tsc",
+    "clean": "rm -rf build",
+    "prepublish": "npm run build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
   "dependencies": {
     "@antv/g6-core": "^0.2.1",
     "@antv/g6-plugin": "^0.2.1"
