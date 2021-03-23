@@ -30,12 +30,14 @@ To start lazy loading images, you’ll need to make some slight modifications to
 
 ```js
 // Before
-graph.addItem('image', {
+graph.addItem('node', {
+  type: 'image',
   img: 'https://example.com/myimage.png'
 })
 
 // After
-graph.addItem('image', {
+graph.addItem('node', {
+  type: 'image',
   img: '',
   imgLazy: 'https://example.com/myimage.png'
 })
