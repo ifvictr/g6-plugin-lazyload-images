@@ -34,7 +34,7 @@ class LazyLoadImages extends PluginBase {
 
     // Set placeholder images
     lazyNodes.forEach(node => {
-      node.update({ ...node.getModel(), img: placeholder })
+      node.update({ img: placeholder })
     })
 
     graph.paint()
