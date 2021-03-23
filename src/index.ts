@@ -1,6 +1,18 @@
 import type { IAbstractGraph, IBBox, INode } from '@antv/g6-core'
 import { PluginBase } from '@antv/g6-plugin'
 
+const overlaps = (a: IBBox, b: IBBox) => {
+  // No horizontal overlap?
+  if (a.minX >= b.maxX || b.minX >= a.maxX) {
+    return false
+  }
+  // No vertical overlap?
+  if (a.minY >= b.maxY || b.minY >= a.maxY) {
+    return false
+  }
+  return true
+}
+
 interface LazyLoadImagesConfig {
   placeholder?: string
 }
@@ -87,16 +99,7 @@ class LazyLoadImages extends PluginBase {
   }
 
   private isNodeInViewport(node: INode) {
-    const model = node.getModel()
-    // TODO: Use the node's bounding box to see if any part of overlaps with
-    // the viewport instead of just using its center.
-    const viewportBBox = this.getViewportBoundingBox()
-    return (
-      viewportBBox.minX <= model.x! &&
-      model.x! <= viewportBBox.maxX &&
-      viewportBBox.minY <= model.y! &&
-      model.y! <= viewportBBox.maxY
-    )
+    return overlaps(node.getBBox(), this.getViewportBoundingBox())
   }
 
   private getViewportBoundingBox(): IBBox {
