@@ -26,7 +26,7 @@ const graph = new G6.Graph({
 })
 ```
 
-To start lazy loading images, you’ll need to slightly change the model of your nodes where you first add it to the graph:
+To start lazy loading images, you’ll need to make some slight modifications to the image node model when you add it to the graph:
 
 ```js
 // Before
@@ -41,7 +41,7 @@ graph.addItem('image', {
 })
 ```
 
-It’s paramount that you set the `img` key to an empty string. Otherwise, G6 will use the fallback image when the graph is first loaded, before the plugin replaces the node’s image with the placeholder.
+It’s paramount that you set the `img` key to an empty string. Otherwise, G6 will use their own image when the graph is first loaded, before the placeholder is injected into the node.
 
 ## License
 
