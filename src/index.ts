@@ -1,4 +1,4 @@
-import type { IAbstractGraph, INode } from '@antv/g6-core'
+import type { IAbstractGraph, IBBox, INode } from '@antv/g6-core'
 import { PluginBase } from '@antv/g6-plugin'
 
 interface LazyLoadImagesConfig {
@@ -92,14 +92,14 @@ class LazyLoadImages extends PluginBase {
     // the viewport instead of just using its center.
     const viewportBBox = this.getViewportBoundingBox()
     return (
-      viewportBBox.x <= model.x! &&
-      model.x! <= viewportBBox.x + viewportBBox.width &&
-      viewportBBox.y <= model.y! &&
-      model.y! <= viewportBBox.y + viewportBBox.height
+      viewportBBox.minX <= model.x! &&
+      model.x! <= viewportBBox.maxX &&
+      viewportBBox.minY <= model.y! &&
+      model.y! <= viewportBBox.maxY
     )
   }
 
-  private getViewportBoundingBox() {
+  private getViewportBoundingBox(): IBBox {
     const graph: IAbstractGraph = this.get('graph')
     const viewCenter = graph.getViewPortCenterPoint()
     const canvasCenter = graph.getCanvasByPoint(viewCenter.x, viewCenter.y)
@@ -112,10 +112,14 @@ class LazyLoadImages extends PluginBase {
       canvasCenter.y + graph.getHeight() / 2
     )
     return {
-      height: bottomRightCorner.y - topLeftCorner.y,
-      width: bottomRightCorner.x - topLeftCorner.x,
       x: topLeftCorner.x,
-      y: topLeftCorner.y
+      y: topLeftCorner.y,
+      minX: topLeftCorner.x,
+      minY: topLeftCorner.y,
+      maxX: bottomRightCorner.x,
+      maxY: bottomRightCorner.y,
+      height: bottomRightCorner.y - topLeftCorner.y,
+      width: bottomRightCorner.x - topLeftCorner.x
     }
   }
 }
