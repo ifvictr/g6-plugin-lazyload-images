@@ -1,4 +1,4 @@
-import type { IAbstractGraph } from '@antv/g6-core'
+import type { IAbstractGraph, INode } from '@antv/g6-core'
 import { PluginBase } from '@antv/g6-plugin'
 
 interface LazyLoadImagesConfig {
@@ -69,6 +69,35 @@ class LazyLoadImages extends PluginBase {
   destroy() {}
 
   private getVisibleLazyNodes() {
+    // TODO: Get nodes right outside the viewport that are likely to be loaded if
+    // the users moves around, then preload them.
+    return this.getLazyNodes()
+      .filter(node => node.getModel().img !== node.getModel().imgLazy) // Nodes that have yet to be loaded
+      .filter(node => this.isNodeInViewport(node))
+  }
+
+  private getLazyNodes() {
+    const graph: IAbstractGraph = this.get('graph')
+    return graph
+      .getNodes()
+      .filter(node => node.getModel().type === 'image')
+      .filter(node => node.getModel().imgLazy !== undefined)
+  }
+
+  private isNodeInViewport(node: INode) {
+    const model = node.getModel()
+    // TODO: Use the node's bounding box to see if any part of overlaps with
+    // the viewport instead of just using its center.
+    const viewportBBox = this.getViewportBoundingBox()
+    return (
+      viewportBBox.x <= model.x! &&
+      model.x! <= viewportBBox.x + viewportBBox.width &&
+      viewportBBox.y <= model.y! &&
+      model.y! <= viewportBBox.y + viewportBBox.height
+    )
+  }
+
+  private getViewportBoundingBox() {
     const graph: IAbstractGraph = this.get('graph')
     const viewCenter = graph.getViewPortCenterPoint()
     const canvasCenter = graph.getCanvasByPoint(viewCenter.x, viewCenter.y)
@@ -80,31 +109,12 @@ class LazyLoadImages extends PluginBase {
       canvasCenter.x + graph.getWidth() / 2,
       canvasCenter.y + graph.getHeight() / 2
     )
-
-    // TODO: Get nodes right outside the viewport that are likely to be loaded if
-    // the users moves around, then preload them.
-    const nodes = this.getLazyNodes()
-      .filter(node => node.getModel().img !== node.getModel().imgLazy) // Nodes that have yet to be loaded
-      .filter(node => {
-        const model = node.getModel()
-        // TODO: Use the node's bounding box to see if any part of overlaps with
-        // the viewport instead of just using its center.
-        return (
-          topLeftCorner.x <= model.x! &&
-          model.x! <= bottomRightCorner.x &&
-          topLeftCorner.y <= model.y! &&
-          model.y! <= bottomRightCorner.y
-        )
-      })
-    return nodes
-  }
-
-  private getLazyNodes() {
-    const graph: IAbstractGraph = this.get('graph')
-    return graph
-      .getNodes()
-      .filter(node => node.getModel().type === 'image')
-      .filter(node => node.getModel().imgLazy !== undefined)
+    return {
+      height: bottomRightCorner.y - topLeftCorner.y,
+      width: bottomRightCorner.x - topLeftCorner.x,
+      x: topLeftCorner.x,
+      y: topLeftCorner.y
+    }
   }
 }
 
