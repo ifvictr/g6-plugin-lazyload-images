@@ -2,6 +2,23 @@
 
 Image lazy-loading plugin for AntV’s [G6](https://github.com/antvis/G6) engine.
 
+Here’s a side-by-side comparison of what a graph might look like, before and after the plugin is added. The network connection is throttled down to fast 3G to highlight the difference:
+
+<table>
+  <tr>
+    <th width="50%">Before</th>
+    <th width="50%">After</th>
+  </tr>
+  <tr>
+    <td width="50%">
+      <img src="https://files.ifvictr.com/2021/03/g6-plugin-lazyload-images-before.gif" />
+    </td>
+    <td width="50%">
+      <img src="https://files.ifvictr.com/2021/03/g6-plugin-lazyload-images-after.gif" />
+    </td>
+  </tr>
+</table>
+
 ## Installation
 
 ```bash
