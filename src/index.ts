@@ -35,6 +35,7 @@ class LazyLoadImages extends PluginBase {
   getEvents() {
     return {
       beforelayout: 'onBeforeLayout',
+      afterlayout: 'onAfterLayout',
       viewportchange: 'onViewportChange'
     }
   }
@@ -59,6 +60,10 @@ class LazyLoadImages extends PluginBase {
 
     graph.paint()
     graph.setAutoPaint(true)
+  }
+
+  protected onAfterLayout() {
+    this.loadLoadableNodes()
   }
 
   protected onViewportChange() {
