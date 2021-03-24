@@ -1,6 +1,10 @@
 import type { IAbstractGraph, IBBox, INode } from '@antv/g6-core'
 import { PluginBase } from '@antv/g6-plugin'
 
+// From https://stackoverflow.com/a/13139830/5906565
+const TRANSPARENT_PIXEL =
+  'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'
+
 const overlaps = (a: IBBox, b: IBBox) => {
   // No horizontal overlap?
   if (a.minX >= b.maxX || b.minX >= a.maxX) {
@@ -21,7 +25,9 @@ class LazyLoadImages extends PluginBase {
   init() {}
 
   getDefaultCfgs(): LazyLoadImagesConfig {
-    return {}
+    return {
+      placeholder: TRANSPARENT_PIXEL
+    }
   }
 
   getEvents() {
