@@ -34,7 +34,8 @@ import G6 from '@antv/g6'
 import LazyLoadImages from 'g6-plugin-lazyload-images'
 
 const lazyLoadImages = new LazyLoadImages({
-  placeholder: 'https://example.com/placeholder.png'
+  // You can use an external image here, but a data URI is preferable.
+  placeholder: 'data:image/svg+xml;base64,…'
 })
 
 const graph = new G6.Graph({
@@ -60,7 +61,7 @@ graph.addItem('node', {
 })
 ```
 
-It’s paramount that you set the `img` key to an empty string. Otherwise, G6 will use their own image when the graph is first loaded, before the placeholder is injected into the node.
+It’s paramount that you set the `img` key to an empty string. Otherwise, G6 will use its own fallback image before the placeholder is injected and you’ll see a flash of that image.
 
 ## License
 
