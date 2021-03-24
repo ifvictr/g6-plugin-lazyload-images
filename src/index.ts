@@ -26,6 +26,8 @@ class LazyLoadImages extends PluginBase {
 
   getDefaultCfgs(): LazyLoadImagesConfig {
     return {
+      // This is needed because G6 won't load any of the images we set in `onViewportChange`
+      // if there isn't a valid image set, be it a URL or data URI.
       placeholder: TRANSPARENT_PIXEL
     }
   }
