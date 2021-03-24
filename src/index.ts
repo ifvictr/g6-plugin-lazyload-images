@@ -62,6 +62,12 @@ class LazyLoadImages extends PluginBase {
   }
 
   protected onViewportChange() {
+    this.loadLoadableNodes()
+  }
+
+  destroy() {}
+
+  private loadLoadableNodes() {
     const loadableNodes = this.getLoadableNodes()
     if (loadableNodes.length === 0) {
       return
@@ -89,8 +95,6 @@ class LazyLoadImages extends PluginBase {
     graph.paint()
     graph.setAutoPaint(true)
   }
-
-  destroy() {}
 
   private getLoadableNodes() {
     return this.getLazyNodes().filter(node => this.isNodeInViewport(node))
