@@ -56,12 +56,12 @@ graph.addItem('node', {
 // After
 graph.addItem('node', {
   type: 'image',
-  img: '',
+  img: null,
   imgLazy: 'https://example.com/myimage.png'
 })
 ```
 
-It’s paramount that you set the `img` key to an empty string. Otherwise, G6 will use its own fallback image before the placeholder is injected and you’ll see a flash of that image.
+It’s paramount that you set the `img` key to `null`. Otherwise, G6 will use its own fallback image before the placeholder is injected and you’ll see a flash of that image.
 
 ## License
 
