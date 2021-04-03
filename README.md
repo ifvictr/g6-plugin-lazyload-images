@@ -61,7 +61,7 @@ graph.addItem('node', {
 })
 ```
 
-It’s paramount that you set the `img` key to `null`. Otherwise, G6 will use its own fallback image before the placeholder is injected and you’ll see a flash of that image.
+It’s imperative that you set the `img` key to `null`. Otherwise, G6 will use its own fallback image before the placeholder is injected and you’ll see a flash of that image.
 
 ## License
 
